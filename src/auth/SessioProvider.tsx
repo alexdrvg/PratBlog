@@ -38,8 +38,10 @@ export function SessioProvider({ children }: { children: ReactNode }) {
   //   2) desa-la a l'estat amb setSessio
   //   3) desa-la al localStorage (clau CLAU_SESSIO, en JSON)
   const iniciaSessio = useCallback((credencial: string) => {
-    console.warn('Falta fer el TODO 7 (iniciaSessio)', credencial)
-  }, [])
+  const nova = creaSessio(credencial)
+  setSessio(nova)
+  localStorage.setItem(CLAU_SESSIO, JSON.stringify(nova))
+}, [])
 
   // TODO 8 · Tancar sessió:
   //   1) avisa Google amb googleLogout()
