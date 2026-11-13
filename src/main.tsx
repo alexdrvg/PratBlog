@@ -13,14 +13,18 @@ import './index.css'
 // TODO 3 · Embolcalla TOTA l'aplicació amb <GoogleOAuthProvider>,
 // passant-li l'ID de client (GOOGLE_CLIENT_ID) i locale="ca".
 // No t'oblidis de l'import de '@react-oauth/google' a dalt de tot.
+import { GoogleOAuthProvider } from '@react-oauth/google'
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <ArticlesProvider>
-        <SessioProvider>
-          <App />
-        </SessioProvider>
-      </ArticlesProvider>
-    </BrowserRouter>
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID} locale="ca">
+      <BrowserRouter>
+        <ArticlesProvider>
+          <SessioProvider>
+            <App />
+          </SessioProvider>
+        </ArticlesProvider>
+      </BrowserRouter>
+    </GoogleOAuthProvider>
   </StrictMode>,
 )
