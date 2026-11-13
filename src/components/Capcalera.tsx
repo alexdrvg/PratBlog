@@ -32,13 +32,23 @@ export function Capcalera() {
         <NavLink to="/admin">Administració</NavLink>
       </nav>
 
-      {/*
-        TODO 12 · Si hi ha sessió, mostra:
-          <Avatar usuari={sessio.usuari} />, el nom de l'usuari,
-          una etiqueta «Admin» si esAdmin és true, i un botó «Surt»
-          que cridi la funció surt().
-        Si no n'hi ha, mostra l'enllaç «Inicia la sessió» que ja hi ha.
-      */}
+      <div className="usuari">
+        {sessio ? (
+          <>
+            <Avatar usuari={sessio.usuari} />
+            <span className="nom">{sessio.usuari.nom}</span>
+            {esAdmin && <span className="etiqueta">Admin</span>}
+            <button type="button" className="boto boto-secundari" onClick={surt}>
+              Surt
+            </button>
+          </>
+        ) : (
+          <NavLink to="/login" className="boto">
+            Inicia la sessió
+          </NavLink>
+        )}
+      </div>
+      
       <div className="usuari">
         <NavLink to="/login" className="boto">
           Inicia la sessió

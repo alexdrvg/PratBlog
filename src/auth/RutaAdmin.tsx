@@ -18,5 +18,11 @@ export function RutaAdmin() {
   const { sessio, esAdmin } = useSessio()
   const ubicacio = useLocation()
 
+  if (!sessio) {
+    return <Navigate to="/login" replace state={{ desDe: ubicacio.pathname }} />
+  }
+  if (!esAdmin) {
+    return <NoAutoritzat />
+  }
   return <Outlet />
 }
