@@ -1,7 +1,7 @@
 // El proveïdor de sessió: guarda, recupera i esborra la sessió
 // ------------------------------------------------------------
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
-
+import { googleLogout } from '@react-oauth/google'
 import { ADMINS, CLAU_SESSIO } from '../config.ts'
 import { SessioContext, type ValorSessio } from './SessioContext.ts'
 import { creaSessio, haCaducat } from './token.ts'
@@ -47,9 +47,12 @@ export function SessioProvider({ children }: { children: ReactNode }) {
   //   1) avisa Google amb googleLogout()
   //   2) esborra la sessió del localStorage
   //   3) posa l'estat a null
+
   const tancaSessio = useCallback(() => {
-    console.warn('Falta fer el TODO 8 (tancaSessio)')
-  }, [])
+  googleLogout()
+  localStorage.removeItem(CLAU_SESSIO)
+  setSessio(null)
+}, [])
 
   // Caducitat: tanquem la sessió just quan el token caduca (1 hora).
   useEffect(() => {

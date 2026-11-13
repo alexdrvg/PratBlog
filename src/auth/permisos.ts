@@ -8,5 +8,5 @@ import type { Usuari } from './tipus.ts'
  *   - el correu (en minúscules) és a la llista d'administradors.
  */
 export function esAdministrador(usuari: Usuari, admins: string[]): boolean {
-  return false // ← TODO 9
+  return usuari.emailVerificat && admins.includes(usuari.email.toLowerCase())
 }
