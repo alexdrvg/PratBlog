@@ -1,14 +1,17 @@
 // Llegir el token d'identitat (JWT) que ens dona Google
 // ------------------------------------------------------------
-import type { ClaimsGoogle, Sessio, Usuari } from './tipus.ts'
-
 /**
  * TODO 4 · Descodifica la credencial (un JWT) i retorna els claims.
  * Fes servir jwtDecode<ClaimsGoogle>() de la llibreria 'jwt-decode'.
  * ATENCIÓ: descodificar NO és verificar (no es comprova la firma).
  */
+
+
+import { jwtDecode } from 'jwt-decode'
+import type { ClaimsGoogle, Sessio, Usuari } from './tipus.ts'
+
 export function descodificaCredencial(credencial: string): ClaimsGoogle {
-  throw new Error('Falta fer el TODO 4 (descodificaCredencial)')
+  return jwtDecode<ClaimsGoogle>(credencial)
 }
 
 /**
@@ -16,7 +19,13 @@ export function descodificaCredencial(credencial: string): ClaimsGoogle {
  *   id ← sub · nom ← name · email ← email · foto ← picture · emailVerificat ← email_verified
  */
 export function claimsAUsuari(claims: ClaimsGoogle): Usuari {
-  throw new Error('Falta fer el TODO 5 (claimsAUsuari)')
+  return {
+    id: claims.sub,
+    nom: claims.name,
+    email: claims.email,
+    foto: claims.picture,
+    emailVerificat: claims.email_verified,
+  }
 }
 
 /**
@@ -25,7 +34,11 @@ export function claimsAUsuari(claims: ClaimsGoogle): Usuari {
  */
 export function creaSessio(credencial: string): Sessio {
   const claims = descodificaCredencial(credencial)
-  throw new Error('Falta fer el TODO 6 (creaSessio)')
+  return {
+    usuari: claimsAUsuari(claims),
+    credencial,
+    caduca: claims.exp * 1000,
+  }
 }
 
 /** Una sessió ha caducat quan l'hora actual ja ha passat l'instant «caduca». */
