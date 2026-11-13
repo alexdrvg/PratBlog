@@ -20,7 +20,10 @@ export const GOOGLE_CLIENT_ID: string = import.meta.env.VITE_GOOGLE_CLIENT_ID ??
  * Si el text és undefined, retorna una llista buida.
  */
 export function llegeixAdmins(text: string | undefined): string[] {
-  return [] // ← TODO 2
+  return (text ?? '')
+    .split(',')
+    .map((correu) => correu.trim().toLowerCase())
+    .filter((correu) => correu !== '')
 }
 
 /** Correus que poden entrar a l'administració del blog. */
