@@ -1,8 +1,19 @@
 // Es mostra quan algú ha iniciat sessió però NO és administrador
+import { startTransition } from 'react'
+import { useNavigate } from 'react-router'
 import { useSessio } from '../auth/useSessio.ts'
 
 export function NoAutoritzat() {
-  const { sessio } = useSessio()
+  const { sessio, tancaSessio } = useSessio()
+  const navega = useNavigate()
+
+  function handleCanviarCompte() {
+    startTransition(() => {
+      tancaSessio()
+      navega('/login')
+    })
+  }
+
   return (
     <section className="targeta centrada">
       <h1>⛔ No tens permís</h1>
@@ -13,6 +24,9 @@ export function NoAutoritzat() {
       <p className="ajuda">
         Els administradors són els correus de <code>VITE_ADMINS</code> al fitxer <code>.env</code>.
       </p>
+      <button type="button" className="boto" onClick={handleCanviarCompte}>
+        Entra amb un altre compte
+      </button>
     </section>
   )
 }
