@@ -8,12 +8,22 @@ export function Panell() {
   const { articles, esborra, restaura } = useArticles()
   const { sessio } = useSessio()
 
+  const minutsRestants = sessio
+    ? Math.max(0, Math.ceil((sessio.caduca - Date.now()) / 60000))
+    : 0
+
   return (
     <section>
       <div className="cap-panell">
         <div>
           <h1>Administració</h1>
           <p className="salutacio">Hola, {sessio ? sessio.usuari.nom : 'desconegut'} 👋</p>
+          {sessio && (
+            <p className="ajuda">
+              La sessió caduca d&apos;aquí a <strong>{minutsRestants}</strong>{' '}
+              {minutsRestants === 1 ? 'minut' : 'minuts'}.
+            </p>
+          )}
         </div>
         <Link className="boto" to="/admin/nou">
           + Nou article
