@@ -5,6 +5,7 @@ import { useArticles } from '../../dades/useArticles.ts'
 import { useSessio } from '../../auth/useSessio.ts'
 import type { DadesArticle } from '../../dades/tipus.ts'
 import { NoTrobada } from '../NoTrobada.tsx'
+import { NoAutoritzat } from '../NoAutoritzat.tsx'
 
 const buit: DadesArticle = { titol: '', resum: '', contingut: '', publicat: false }
 
@@ -19,6 +20,11 @@ export function EditorArticle() {
 
   if (id && !existent) return <NoTrobada />
 
+  // Només pot editar-lo qui l'ha escrit
+  if (existent && existent.autorId !== sessio?.usuari.id) {
+    return <NoAutoritzat />
+  }
+
   function canvia<K extends keyof DadesArticle>(camp: K, valor: DadesArticle[K]) {
     setDades((anteriors) => ({ ...anteriors, [camp]: valor }))
   }
@@ -28,8 +34,8 @@ export function EditorArticle() {
     if (existent) {
       actualitza(existent.id, dades)
     } else {
-      // L'autor és qui ha iniciat sessió amb Google
-      afegeix(dades, sessio ? sessio.usuari.nom : 'Anònim')
+      // L'autor és qui ha iniciat sessió amb Google (guardem nom i id/sub)
+      afegeix(dades, sessio ? sessio.usuari.nom : 'Anònim', sessio?.usuari.id)
     }
     navega('/admin')
   }

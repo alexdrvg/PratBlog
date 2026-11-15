@@ -5,6 +5,7 @@ export type Article = {
   resum: string
   contingut: string
   autor: string
+  autorId?: string
   /** Data de publicació en format ISO (2026-11-13) */
   data: string
   /** Només els publicats surten a la part pública */

@@ -3,7 +3,7 @@ import type { Article, DadesArticle } from './tipus.ts'
 
 export type ValorArticles = {
   articles: Article[]
-  afegeix: (dades: DadesArticle, autor: string) => Article
+  afegeix: (dades: DadesArticle, autor: string, autorId?: string) => Article
   actualitza: (id: string, dades: DadesArticle) => void
   esborra: (id: string) => void
   restaura: () => void

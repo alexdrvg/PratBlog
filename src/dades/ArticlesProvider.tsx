@@ -1,6 +1,5 @@
 // Els articles del blog, guardats al localStorage
 // ------------------------------------------------------------
-// Aquest fitxer ja està fet: no l'has de tocar.
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { CLAU_ARTICLES } from '../config.ts'
 import { ArticlesContext, type ValorArticles } from './ArticlesContext.ts'
@@ -21,7 +20,7 @@ function creaId(titol: string): string {
   const base = titol
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
   return `${base || 'article'}-${Date.now().toString(36)}`
@@ -35,13 +34,15 @@ export function ArticlesProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(CLAU_ARTICLES, JSON.stringify(articles))
   }, [articles])
 
-  const afegeix = useCallback((dades: DadesArticle, autor: string) => {
+  const afegeix = useCallback((dades: DadesArticle, autor: string, autorId?: string) => {
     const nou: Article = {
       ...dades,
       id: creaId(dades.titol),
       autor,
+      autorId,          // ← añadido
       data: new Date().toISOString().slice(0, 10),
     }
+  
     setArticles((anteriors) => [nou, ...anteriors])
     return nou
   }, [])

@@ -52,7 +52,7 @@ export function Panell() {
                 </span>
               </td>
               <td className="accions">
-                <Link to={`/admin/edita/${a.id}`}>Edita</Link>
+                {a.autorId === sessio?.usuari.id && <Link to={`/admin/edita/${a.id}`}>Edita</Link>}
                 <button type="button" className="enllac perill" onClick={() => esborra(a.id)}>
                   Esborra
                 </button>
