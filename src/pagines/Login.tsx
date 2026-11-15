@@ -36,6 +36,7 @@ export function Login() {
           text="signin_with"
           shape="pill"
           size="large"
+          useOneTap
         />
       </div>
       {error && <p className="error">{error}</p>}
