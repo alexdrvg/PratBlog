@@ -48,12 +48,6 @@ export function Capcalera() {
           </NavLink>
         )}
       </div>
-      
-      <div className="usuari">
-        <NavLink to="/login" className="boto">
-          Inicia la sessió
-        </NavLink>
-      </div>
     </header>
   )
 }
